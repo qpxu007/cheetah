@@ -331,6 +331,19 @@ void cPixelDetectorCommon::configure(cGlobal * global) {
 		pixelSize = 172e-6;
 		
 	}
+    else if(strcmp(detectorType, "eiger16M") == 0 || strcmp(detectorName, "eiger16M") == 0 ) {
+                strcpy(detectorType, "eiger16M");
+                asic_nx = EIGER16M_ASIC_NX;
+                asic_ny = EIGER16M_ASIC_NY;
+                nasics_x = EIGER16M_nASICS_X;
+                nasics_y = EIGER16M_nASICS_Y;
+                asic_nn = asic_nx*asic_ny;
+                pix_nx = asic_nx * nasics_x;
+                pix_ny = asic_ny * nasics_y;
+                pix_nn = pix_nx * pix_ny;
+                pixelSize = 75e-6;
+
+        }
     else if(strcmp(detectorType, "jungfrau1M") == 0) {
         strcpy(detectorType, "jungfrau1M");
         asic_nx = 256;

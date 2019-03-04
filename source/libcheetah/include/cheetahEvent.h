@@ -173,7 +173,7 @@ public:
     double detector2Theta;
     double shutterTime;
     double threshold;
-	
+    char detectorName[1024];
 } ;
 
 #define ERROR(...) cheetahError(__FILE__, __LINE__, __VA_ARGS__)

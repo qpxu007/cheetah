@@ -797,8 +797,7 @@ static CXI::Node *createCXISkeleton(const char *filename, cGlobal *global){
 	
 	
 	
-    if(!strcmp(global->facility, "APS") ) {
-        //Node *aps = root->createGroup("APS");
+    if(!strcmp(global->facility, "APS") || !strcmp(global->facility, "GMCA")) {
         Node *aps = facility;
         root->createLink("APS","instrument");
         aps->createStack("timestamp",H5T_NATIVE_CHAR,26);
@@ -819,6 +818,8 @@ static CXI::Node *createCXISkeleton(const char *filename, cGlobal *global){
             aps->createStack("angleIncrement",H5T_NATIVE_DOUBLE);
             aps->createStack("shutterTime",H5T_NATIVE_DOUBLE);
             aps->createStack("threshold",H5T_NATIVE_DOUBLE);
+            
+            aps->createStack("detector",H5T_NATIVE_CHAR,255);
         }
     }
 
@@ -1428,10 +1429,9 @@ static CXI::Node *createResultsSkeleton(const char *filename, cGlobal *global){
 
 	
     // APS
-    if(!strcmp(global->facility, "APS") ) {
+    if(!strcmp(global->facility, "APS") || !strcmp(global->facility, "GMCA") ) {
         Node *aps = facility;
         root->createLink("APS","instrument");
-        //Node *aps = root->createGroup("APS");
         aps->createStack("exposureTime",H5T_NATIVE_DOUBLE);
         aps->createStack("exposurePeriod",H5T_NATIVE_DOUBLE);
         aps->createStack("tau",H5T_NATIVE_DOUBLE);
@@ -1448,6 +1448,8 @@ static CXI::Node *createResultsSkeleton(const char *filename, cGlobal *global){
         aps->createStack("photon_energy_eV",H5T_NATIVE_DOUBLE);
         aps->createStack("photon_wavelength_A",H5T_NATIVE_DOUBLE);
         aps->createStack("threshold",H5T_NATIVE_DOUBLE);
+
+        aps->createStack("detector",H5T_NATIVE_CHAR,255);
     }
 
 	
@@ -2248,8 +2250,7 @@ void writeCXIData(CXI::Node *cxi, cEventData *eventData, cGlobal *global, uint s
 	
 
     // APS
-    if(!strcmp(global->facility, "APS")) {
-        //Node &aps = root["APS"];
+    if(!strcmp(global->facility, "APS") || !strcmp(global->facility, "GMCA")) {
         Node &aps = root["instrument"];
 
         aps["timestamp"].write(eventData->timeString,stackSlice);
@@ -2270,6 +2271,8 @@ void writeCXIData(CXI::Node *cxi, cEventData *eventData, cGlobal *global, uint s
             aps["angleIncrement"].write(&eventData->angleIncrement,stackSlice);
             aps["shutterTime"].write(&eventData->shutterTime,stackSlice);
             aps["threshold"].write(&eventData->threshold,stackSlice);
+
+            aps["detector"].write(eventData->detectorName,stackSlice);
         }
     }
 
@@ -2306,6 +2309,9 @@ void writeCXIData(CXI::Node *cxi, cEventData *eventData, cGlobal *global, uint s
             long radial_nn = global->detector[detIndex].radial_nn;
             
             detector["distance"].write(&tmp,stackSlice);
+            if (!strcmp(global->facility, "APS") || !strcmp(global->facility, "GMCA")) {
+                detector["distance"].write(&eventData->detectorDistance, stackSlice);
+            }
             detector["x_pixel_size"].write(&pixelSize,stackSlice);
             detector["y_pixel_size"].write(&pixelSize,stackSlice);
             
@@ -2639,7 +2645,7 @@ void writeResultsData(CXI::Node *results, cEventData *eventData, cGlobal *global
 	
     
     // APS
-    if(!strcmp(global->facility, "APS")) {
+    if(!strcmp(global->facility, "APS") || !strcmp(global->facility, "GMCA")) {
         Node &aps = root["instrument"];
         aps["exposureTime"].write(&eventData->exposureTime,stackSlice);
         aps["exposurePeriod"].write(&eventData->exposurePeriod, stackSlice);
@@ -2657,6 +2663,7 @@ void writeResultsData(CXI::Node *results, cEventData *eventData, cGlobal *global
         aps["photon_wavelength_A"].write(&eventData->wavelengthA,stackSlice);
         aps["timestamp"].write(eventData->timeString,stackSlice);
         aps["threshold"].write(&eventData->threshold,stackSlice);
+        aps["detector"].write(eventData->detectorName,stackSlice);
     }
     
 

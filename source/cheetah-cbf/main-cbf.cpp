@@ -45,8 +45,8 @@ int main(int argc, const char * argv[])
     printf("CBF file parser\n");
     printf("Natasha Stander, December 2015\n");
 
-    if (argc != 4) {
-        printf("Usage: cheetah-cbf listfile inifile runnumber\n");
+    if (argc < 3) {
+        printf("Usage: cheetah-cbf listfile inifile [runnumber, default 1] [experiment_id, default GMCA-eid]\n");
         return 0;
     }
 
@@ -54,18 +54,17 @@ int main(int argc, const char * argv[])
     strcpy(filename, argv[1]);
 
     // Initialize Cheetah
-	printf("Setting up Cheetah...\n");
+    printf("Setting up Cheetah...\n");
     static long frameNumber = 0;
-    long runNumber = atoi(argv[3]); /* ?? */
-	static cGlobal cheetahGlobal;
-	static time_t startT = 0;
-	time(&startT);
+    long runNumber = argc==4 ? atoi(argv[3]):1;
+    static cGlobal cheetahGlobal;
+    static time_t startT = 0;
+    time(&startT);
     strcpy(cheetahGlobal.configFile, argv[2]);
-    strcpy(cheetahGlobal.experimentID, "APS2016");
-	cheetahInit(&cheetahGlobal);
+    strcpy(cheetahGlobal.experimentID, argc==5 ? argv[4]:"GMCA-eid");
+    cheetahInit(&cheetahGlobal);
     cheetahGlobal.runNumber = runNumber;
-    strcpy(cheetahGlobal.facility,"APS")
-    
+    strcpy(cheetahGlobal.facility,"GMCA");
 
     // Open List file
     FILE *fh = fopen(argv[1], "r");
@@ -109,7 +108,12 @@ int main(int argc, const char * argv[])
 
         // Header will fill in photonEnergyeV and wavelengthA
         parseCBFHeader(cbfh, eventData);
+        if (abs(eventData->photonEnergyeV - cheetahGlobal.defaultPhotonEnergyeV) < 0.1) {
+          eventData->photonEnergyeV = 12398.42 / eventData->wavelengthA;
+          printf("photonEnergy EV derived from wavelength = %lf %lf\n", eventData->photonEnergyeV, eventData->wavelengthA);
+        }
 
+        printf("detector distance = %lf\n", eventData->detectorDistance);
         // Now, load image
         loadImage(cbfh, eventData);
 
@@ -170,9 +174,7 @@ int parseCBFHeader(cbf_handle &cbfh, cEventData* eventData) {
         *end = 0;
 
         // check the line for the values we're interested in
-        
         sscanf(cur,"# Wavelength %lf", &(eventData->wavelengthA));
-
         sscanf(cur,"# Exposure_time %lf", &(eventData->exposureTime));
         sscanf(cur,"# Exposure_period %lf", &(eventData->exposurePeriod));
         sscanf(cur,"# Tau = %lf", &(eventData->tau));
@@ -186,14 +188,12 @@ int parseCBFHeader(cbf_handle &cbfh, cEventData* eventData) {
         sscanf(cur,"# Detector_2theta %lf", &(eventData->detector2Theta));
         sscanf(cur,"# Shutter_time %lf", &(eventData->shutterTime));
 
+        sscanf(cur,"# Detector: %[^\t\n]",  &(eventData->detectorName));
 
-       // This is a hack that will break after the year 2019
-       strncpy(prefix,cur,5);
-       if (strcmp(prefix,"# 201") == 0) {
+       // timestamp, this is not a mandatory field
+       if (strcmp(prefix,"# 20") == 0) {
            strcpy(eventData->timeString,cur + 2);
        }
-           
-        
 
         // prepare current and end for next line
         end ++;
@@ -205,6 +205,7 @@ int parseCBFHeader(cbf_handle &cbfh, cEventData* eventData) {
     // Error if wavelength or photonEv not found
     if (eventData->wavelengthA == 0)       
         printf("Warning: Could not find wavelength in cbf file!\n");
+    printf("detector = %s\n", eventData->detectorName);
     //printf("Debugging: found wavelength %f and photon ev %f\n", eventData->wavelengthA, eventData->photonEnergyeV);
     eventData->detector[0].detectorZ = eventData->detectorDistance;
     return 0;
