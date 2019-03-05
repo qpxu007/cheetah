@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CDIR=${PX}/serial-x/cheetah
+CDIR=/mnt/beegfs/qxu/cheetah-git/cheetah
 ADIR=/mnt/software/anaconda3/
 
 

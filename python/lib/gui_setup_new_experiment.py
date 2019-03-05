@@ -378,6 +378,9 @@ def modify_cheetah_config_files(self):
 def extract_gmca_template(self):
     #   Deduce experiment number, etc using de-referenced paths
     #   Assumes the file path follows the pattern:   /mnt/beegfs/qxu/23IDD-date/expt/run0001.
+
+    from shutil import copyfile
+
     realdir = os.getcwd()
 
     fields = realdir.split("/")
@@ -554,7 +557,7 @@ def extract_gmca_template(self):
     cmd = ["sed", "-i", "-r", "/^source /s/(.*)/##\\1/", process_file]
     cfel_file.spawn_subprocess(cmd, wait=True)
 
-    os.system("sed -i -r '/^\$HITFINDER/s/(.*)/$HITFINDER -q -O -r $1 -j 12 -t $3 -i $2/' cheetah/process/process")
+    os.system("sed -i -r '/^\$HITFINDER/s/(.*)/$HITFINDER -q -O -r $1 -j 12 -t $4 -i $2/' cheetah/process/process")
     os.system("sed -i -r '/^export CHEETAH=/s/(.*)/export CHEETAH=\/mnt\/software\/px\/serial-x\/cheetah\/bin\/cheetah-cbf/' cheetah/process/process")
     copyfile("/mnt/software/px/serial-x/cheetah/scripts/hitfinder_gmca", prefix + "/process/hitfinder")
     os.system("cp /mnt/software/px/serial-x/cheetah/gmca-examples/*.geom " + prefix + "/calib/geometry/")

@@ -51,7 +51,7 @@ def scan_hdf5(hdf5_dir):
         directory = dirname2
 
         # Extract the run number (Warning: LCLS-specific)
-        if directory.startswith('r'):
+        if directory.startswith('r') and not directory.startswith('run'):
             run = directory[:5]
         else:
             part = directory.partition('-')

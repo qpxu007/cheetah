@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #CDIR=/mnt/software/px/serial-x/cheetah
-CDIR=/mnt/beegfs/qxu/cheetah
+CDIR=/mnt/beegfs/qxu/cheetah-git/cheetah
 ADIR=/mnt/software/anaconda3/
 
 echo Using ${CDIR}

@@ -15,6 +15,7 @@ import UI.crawler_ui
 import lib.crawler_slac as crawler_slac
 import lib.crawler_exfel as crawler_exfel
 import lib.crawler_p11 as crawler_p11
+import lib.crawler_gmca as crawler_gmca
 import lib.crawler_hdf5 as crawler_hdf5
 import lib.crawler_crystfel as crawler_crystfel
 import lib.crawler_merge as merge

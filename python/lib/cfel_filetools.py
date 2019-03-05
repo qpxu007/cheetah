@@ -381,6 +381,13 @@ def read_cxi(filename, frameID=0, data=False, mask=False, peaks=False, photon_en
             EncoderValue = hdf5_fh['/instrument/detector_1/EncoderValue'][frameID]
         except:
             EncoderValue = 'nan'
+
+        # GMCA/APS
+        if EncoderValue == 'nan':
+            try:
+                EncoderValue = hdf5_fh['/instrument/detectorDistance'][frameID]
+            except:
+                pass
     else:
         EncoderValue = 'nan'
 

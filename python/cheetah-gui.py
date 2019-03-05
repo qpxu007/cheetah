@@ -356,11 +356,13 @@ class cheetah_gui(PyQt5.QtWidgets.QMainWindow):
                 dir = 'r{:04d}'.format(int(run))
             elif 'max-cfel' in self.compute_location['location']:
                 dir = 'r{:04d}'.format(int(run))
+            elif 'GMCA' in self.compute_location['location']:
+                dir = run
             else:
                 dir = run
             dir += '-'+dataset
             print('Output directory: ', dir)
-
+            print('dataset tag: ', dataset)
 
             #Update Dataset and Cheetah status in table
             table_row = runs['row'][i]
@@ -372,7 +374,6 @@ class cheetah_gui(PyQt5.QtWidgets.QMainWindow):
             self.table.setItem(table_row, 11, PyQt5.QtWidgets.QTableWidgetItem(calibfile))
 
             self.table.item(table_row, 3).setBackground(PyQt5.QtGui.QColor(255, 255, 100))
-
 
             # Update dataset file
             if run in dataset_csv['Run']:

@@ -94,7 +94,8 @@ def index_runs(guiself, dirs=None, nocell=False, geopt=False):
 
 
         # Send indexing command to batch farm
-        qlabel = 'indx-'+dirbase[1:5]
+        #qlabel = 'indx-'+dirbase[1:5]
+        qlabel = 'indx-'+(dirbase[3:7] if dirbase.startswith('run') else dirbase[1:5])
         logfile = 'bsub.log'
         abspath = os.path.abspath(indexdir)+'/'
         #Version 0

@@ -189,6 +189,11 @@ class Ui_MainWindow(object):
         self.actionAutoscale.setCheckable(True)
         self.actionAutoscale.setChecked(True)
         self.actionAutoscale.setObjectName("actionAutoscale")
+
+        self.action_Imagefloorzero.setCheckable(True)
+        self.action_Imagefloorzero.setChecked(True)
+        self.action_Imagefloorzero.setObjectName("action_Imagefloorzero")
+
         self.menu_view_photonconversion = QtWidgets.QAction(MainWindow)
         self.menu_view_photonconversion.setObjectName("menu_view_photonconversion")
         self.actionSave_data_assembled = QtWidgets.QAction(MainWindow)

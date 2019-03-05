@@ -40,8 +40,11 @@ def scan_crystfel(crystfel_dir):
 
         # Extract the directory name and run number
         directory = os.path.basename(dir)
-        run = directory[:5]
-
+        #run = directory[:5]
+        if directory.startswith('run'):
+            run = directory.split("-")[0]
+        else:
+            run = directory[:5]
 
         # Presence of directory means job has been submitted
         status = 'Submitted'
