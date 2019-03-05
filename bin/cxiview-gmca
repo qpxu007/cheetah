@@ -1,0 +1,12 @@
+#!/bin/bash
+
+CDIR=${PX}/serial-x/cheetah
+ADIR=/mnt/software/anaconda3/
+
+
+echo Using ${CDIR}
+export PYTHONPATH=""
+export PATH=${CDIR}/bin:${ADIR}/bin:${CDIR}/python:$PATH
+
+$CDIR/python/cxiview.py $@
+

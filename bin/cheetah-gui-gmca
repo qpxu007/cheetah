@@ -1,0 +1,12 @@
+#!/bin/bash
+
+#CDIR=/mnt/software/px/serial-x/cheetah
+CDIR=/mnt/beegfs/qxu/cheetah
+ADIR=/mnt/software/anaconda3/
+
+echo Using ${CDIR}
+export PYTHONPATH=""
+export PATH=${CDIR}/bin:${ADIR}/bin:${CDIR}/python:$PATH
+
+$CDIR/python/cheetah-gui.py
+
