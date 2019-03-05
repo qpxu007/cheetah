@@ -41,6 +41,8 @@ class cheetah_crawler(PyQt5.QtWidgets.QMainWindow):
             self.datatype = 'exfel'
         if 'p11' in self.data_dir and 'asap3' in self.data_dir:
             self.datatype = 'P11'
+        if '23ID' in self.data_dir and '/mnt/beegfs' in self.data_dir:
+            self.datatype = 'GMCA'
 
         # What have we decided?
         print("Will use data crawler for ", self.datatype)
@@ -63,6 +65,8 @@ class cheetah_crawler(PyQt5.QtWidgets.QMainWindow):
             crawler_exfel.scan_data(self.data_dir)
         elif self.datatype is 'P11':
             crawler_p11.scan_data(self.data_dir)
+        elif self.datatype is 'GMCA':
+            crawler_gmca.scan_data(self.data_dir)
         elif self.datatype is 'directories':
             crawler_p11.scan_data(self.data_dir)
 

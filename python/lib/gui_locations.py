@@ -16,9 +16,6 @@ def determine_location():
     hostname = socket.getfqdn()
     print("Hostname: ", hostname)
 
-
-
-
     #
     #   Determine where we are
     #   Enables location configuration to be overridden separately from what is determined here, eg: from command line
@@ -51,6 +48,10 @@ def determine_location():
         print("Looks like we are on the euXFEL network.")
         location = 'euXFEL'
 
+    elif hostname.endswith("gmca.aps.anl.gov"):
+        print("Looks like we are on the GMCA/APS network.")
+        location = 'GMCA'
+
     else:
         print("Unable to determine location from hostname")
         location = 'None'
@@ -58,7 +59,6 @@ def determine_location():
     print("self.location set to: ", location)
 
     return location
-
 
 
 
@@ -102,6 +102,12 @@ def set_location_configuration(location="Default"):
     elif  location=='euXFEL':
         config = {
             'qcommand' : 'slurm'
+        }
+        result.update(config)
+
+    elif  location=='GMCA': # SGE batch system
+        config = {
+            'qcommand' : 'qsub'
         }
         result.update(config)
 
