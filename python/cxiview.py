@@ -70,18 +70,23 @@ class cxiview(PyQt5.QtWidgets.QMainWindow):
             self.photon_energy = float(self.default_eV)
             self.photon_energy_ok = True
         else:
+
             # reading photon energy from streamfile failed, try cxi
             self.photon_energy = cxi['photon_energy_eV']
             if not numpy.isnan(self.photon_energy):
                 self.photon_energy_ok = True
 
+
             # get photon energy from streamfile
             if self.stream_filepath != "":
                 self.photon_energy = self.streamfile.chunks[self.img_index].photon_energy
+
                 if self.photon_energy > 0:
                     self.photon_energy_ok = True
             if self.photon_energy < 0 or numpy.isnan(self.photon_energy):
                 self.photon_energy_ok = False
+
+
 
         # Photon energy to wavelength
         if self.photon_energy_ok:
@@ -100,14 +105,18 @@ class cxiview(PyQt5.QtWidgets.QMainWindow):
             # get detector distance from streamfile
             if self.stream_filepath != "":
                 detector_distance = self.streamfile.chunks[self.img_index].clen
+
+
             if detector_distance is None:
                 detector_distance = cxi['EncoderValue']
 
             if not numpy.isnan(detector_distance) and not numpy.isnan(self.geometry['coffset']):
                 self.detector_distance_ok = True
-                self.detector_z_m = (1e-3*detector_distance + self.geometry['coffset'])
+                factor = 1 if detector_distance < 10 else 1.e-3  # try to convert if detector distance in mm or m
+                self.detector_z_m = (factor*detector_distance + self.geometry['coffset'])
             else:
                 self.detector_z_m = float('nan')
+
         self.detector_z_mm = self.detector_z_m * 1e3
 
 
@@ -116,7 +125,6 @@ class cxiview(PyQt5.QtWidgets.QMainWindow):
             self.resolution_ok = True
         else:
             self.resolution_ok = False
-
 
 
         # Set window title
@@ -304,6 +312,7 @@ class cxiview(PyQt5.QtWidgets.QMainWindow):
 
         # Draw resolution rings
         if self.ui.resolutionCheckBox.isChecked():
+            print("drawing resolution rings...")
             self.update_resolution_rings()
         else:
             self.resolution_rings_canvas.setData([], [])
@@ -349,7 +358,7 @@ class cxiview(PyQt5.QtWidgets.QMainWindow):
 
         # Refuse to draw deceptive resolution rings
         if self.resolution_ok == False:
-            #print("Insufficient information to calculate resolution")
+            print("Insufficient information to calculate resolution")
             return
 
 
@@ -408,6 +417,8 @@ class cxiview(PyQt5.QtWidgets.QMainWindow):
     def draw_resolution_rings(self):
         dx = self.geometry['dx']
         resolution_rings_in_pix = [2.0]
+
+        print(" === ", self.detector_z_m, self.lambd, dx)
         for resolution in self.resolution_rings_in_A:
             resolution = float(resolution)
             res_in_pix = (2.0 / dx) * self.detector_z_m * numpy.tan(2.0 * numpy.arcsin(self.lambd / (2.0 * resolution * 1e-10)))
