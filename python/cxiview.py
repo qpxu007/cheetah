@@ -243,8 +243,8 @@ class cxiview(PyQt5.QtWidgets.QMainWindow):
                 n_peaks = cxi['n_peaks']
                 peak_x_data = cxi['peakXPosRaw']
                 peak_y_data = cxi['peakYPosRaw']
-            
-            for ind in range(0,n_peaks):                
+
+            for ind in range(0, n_peaks):
                 peak_fs = peak_x_data[ind]                
                 peak_ss = peak_y_data[ind]         
                 

@@ -501,6 +501,8 @@ def extract_gmca_template(self):
     else:
         prefix = 'cheetah'
 
+    print("INFO current work dir=", dir, "prefix=", prefix)
+
     # Modify detector type string
     print("Modifying detector type...")
     detectorType = result["detectorType"]
@@ -561,6 +563,12 @@ def extract_gmca_template(self):
     os.system("sed -i -r '/^export CHEETAH=/s/(.*)/export CHEETAH=\/mnt\/software\/px\/serial-x\/cheetah\/bin\/cheetah-cbf/' cheetah/process/process")
     copyfile("/mnt/software/px/serial-x/cheetah/scripts/hitfinder_gmca", prefix + "/process/hitfinder")
     os.system("cp /mnt/software/px/serial-x/cheetah/gmca-examples/*.geom " + prefix + "/calib/geometry/")
+
+    os.system("rm -rf " + prefix + "/calib/geometry/current-geometry.geom")
+    if 'pilatus' in detectorType in detectorType:
+        os.system("ln -sr "+ prefix+ "/calib/geometry/pilatus-cheetah-cxi.geom " + prefix + "/calib/geometry/current-geometry.geom")
+    elif 'eiger' in detectorType in detectorType:
+        os.system("ln -sr "+ prefix+ "/calib/geometry/eiger-cheetah-cxi.geom " + prefix + "/calib/geometry/current-geometry.geom")
 
     os.system("sed -i -r '/^source/s/(.*)/source \/mnt\/software\/px\/serial-x\/serialx-setup.sh/' cheetah/process/queue.sh")
     os.system("sed -i '1isource \/mnt\/software\/px\/serial-x\/serialx-setup.sh' cheetah/process/index_nocell.sh")
