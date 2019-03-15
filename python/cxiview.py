@@ -106,9 +106,12 @@ class cxiview(PyQt5.QtWidgets.QMainWindow):
             if self.stream_filepath != "":
                 detector_distance = self.streamfile.chunks[self.img_index].clen
 
-
             if detector_distance is None:
                 detector_distance = cxi['EncoderValue']
+
+            if 'coffset' in self.geometry:
+                print("WARNING: coffset was not set in geometry, default to 0")
+                self.geometry['coffset'] = 0
 
             if not numpy.isnan(detector_distance) and not numpy.isnan(self.geometry['coffset']):
                 self.detector_distance_ok = True
@@ -119,8 +122,8 @@ class cxiview(PyQt5.QtWidgets.QMainWindow):
 
         self.detector_z_mm = self.detector_z_m * 1e3
 
-
         # Do not allow deceptive resolution values if we have insufficient information to calculate resolution
+        # print("parameter for resolution calculation: ", self.geometry_ok, self.photon_energy_ok, self.detector_z_mm)
         if self.geometry_ok and self.photon_energy_ok and self.detector_distance_ok:
             self.resolution_ok = True
         else:
