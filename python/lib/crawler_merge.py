@@ -208,6 +208,9 @@ def crawler_merge(info):
                 crystfel_status = crystfel['status'][i].strip()
                 indexrate = crystfel['indexrate%'][i].strip()
 
+        if info.datatype == 'GMCA' and not run.startswith("run"):
+            continue
+
         # Concatenate info for this run into output list
         run_out.append(run)
         datastatus_out.append(datastatus)

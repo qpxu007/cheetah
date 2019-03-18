@@ -430,7 +430,15 @@ def extract_gmca_template(self):
     # Unpack template
     print('>---------------------<')
     print('Extracting template...')
-    cmd = ['tar', '-xf', '/mnt/software/px/serial-x/cheetah/template.tar']
+    template_file = '/mnt/software/px/serial-x/cheetah/template.tar.gz'
+    if not os.path.exist(template_file):
+        template_file = '/mnt/software/px/serial-x/cheetah/SLAC-template.tar.gz'
+
+        if not os.path.exist(template_file):
+            print("starting template file does not exist. Quitting.")
+            exit(0)
+
+    cmd = ['tar', '-xf', '{}'.format(template_file)]
     cfel_file.spawn_subprocess(cmd, wait=True)
     print("Done")
 
