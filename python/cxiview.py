@@ -109,7 +109,7 @@ class cxiview(PyQt5.QtWidgets.QMainWindow):
             if detector_distance is None:
                 detector_distance = cxi['EncoderValue']
 
-            if 'coffset' in self.geometry:
+            if not 'coffset' in self.geometry or self.geometry['coffset'] == 'nan':
                 print("WARNING: coffset was not set in geometry, default to 0")
                 self.geometry['coffset'] = 0
 

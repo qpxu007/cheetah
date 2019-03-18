@@ -54,20 +54,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="crawler_merge.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/crawler_merge.py">
+      <file leaf-file-name="cxiview.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cxiview.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2342">
-              <caret line="210" selection-start-line="210" selection-end-line="210" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="gui_setup_new_experiment.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/lib/gui_setup_new_experiment.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="707">
-              <caret line="438" selection-start-line="438" selection-end-line="438" />
+            <state relative-caret-position="324">
+              <caret line="111" column="77" selection-start-line="111" selection-start-column="77" selection-end-line="111" selection-end-column="77" />
+              <folding>
+                <element signature="e#274#289#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -83,7 +77,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>darkcal</find>
       <find>self.event_list</find>
       <find>playPushButton</find>
       <find>refresh_timer</find>
@@ -112,7 +105,8 @@
       <find>tilt</find>
       <find>find</find>
       <find>copy</find>
-      <find>to calculate resol</find>
+      <find />
+      <find />
     </findStrings>
     <replaceStrings>
       <replace>gui_locations</replace>
@@ -144,9 +138,9 @@
         <option value="$PROJECT_DIR$/mask_gen.py" />
         <option value="$PROJECT_DIR$/geometry.py" />
         <option value="$PROJECT_DIR$/lib/cfel_filetools.py" />
-        <option value="$PROJECT_DIR$/cxiview.py" />
         <option value="$PROJECT_DIR$/lib/crawler_merge.py" />
         <option value="$PROJECT_DIR$/lib/gui_setup_new_experiment.py" />
+        <option value="$PROJECT_DIR$/cxiview.py" />
       </list>
     </option>
   </component>
@@ -156,7 +150,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="1">
     <option name="x" value="787" />
     <option name="y" value="77" />
     <option name="width" value="1697" />
@@ -679,13 +673,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cxiview.py">
+    <entry file="file://$PROJECT_DIR$/lib/gui_setup_new_experiment.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="124" selection-start-line="124" selection-end-line="124" />
-          <folding>
-            <element signature="e#274#289#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="248">
+          <caret line="438" selection-start-line="438" selection-end-line="438" />
         </state>
       </provider>
     </entry>
@@ -696,10 +687,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/gui_setup_new_experiment.py">
+    <entry file="file://$PROJECT_DIR$/cxiview.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="707">
-          <caret line="438" selection-start-line="438" selection-end-line="438" />
+        <state relative-caret-position="324">
+          <caret line="111" column="77" selection-start-line="111" selection-start-column="77" selection-end-line="111" selection-end-column="77" />
+          <folding>
+            <element signature="e#274#289#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
