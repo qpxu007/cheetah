@@ -431,10 +431,10 @@ def extract_gmca_template(self):
     print('>---------------------<')
     print('Extracting template...')
     template_file = '/mnt/software/px/serial-x/cheetah/template.tar.gz'
-    if not os.path.exist(template_file):
+    if not os.path.exists(template_file):
         template_file = '/mnt/software/px/serial-x/cheetah/SLAC-template.tar.gz'
 
-        if not os.path.exist(template_file):
+        if not os.path.exists(template_file):
             print("starting template file does not exist. Quitting.")
             exit(0)
 

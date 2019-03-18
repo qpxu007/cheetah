@@ -119,17 +119,6 @@ class run_cheetah_gui(PyQt5.QtWidgets.QDialog):
         #layout.addWidget(self.label1b)
 
 
-        # Text box for dataset entry
-        layout2 = PyQt5.QtWidgets.QHBoxLayout()
-        self.label2 = PyQt5.QtWidgets.QLabel()
-        self.label2.setText("Dataset tag: ")
-        self.le = PyQt5.QtWidgets.QLineEdit(self)
-        self.le.setText(lasttag)
-        layout2.addWidget(self.label2)
-        layout2.addWidget(self.le)
-        layout.addLayout(layout2)
-
-
         # Combo box for list of .ini files
         layout3 = PyQt5.QtWidgets.QHBoxLayout()
         self.label3 = PyQt5.QtWidgets.QLabel()
@@ -141,6 +130,18 @@ class run_cheetah_gui(PyQt5.QtWidgets.QDialog):
         layout3.addWidget(self.cb)
         layout.addLayout(layout3)
 
+
+        # Text box for dataset entry
+        layout2 = PyQt5.QtWidgets.QHBoxLayout()
+        self.label2 = PyQt5.QtWidgets.QLabel()
+        self.label2.setText("Dataset tag: ")
+        self.le = PyQt5.QtWidgets.QLineEdit(self)
+        self.le.setText(lasttag)
+        layout2.addWidget(self.label2)
+        layout2.addWidget(self.le)
+        layout.addLayout(layout2)
+
+        self.cb.currentTextChanged.connect(self.update_dataset_tag)
 
         # Another combo box for list of calibration files
         # (These are just a different type of .ini file from the same list)
@@ -163,6 +164,9 @@ class run_cheetah_gui(PyQt5.QtWidgets.QDialog):
         self.buttonBox.rejected.connect(self.reject)
         layout.addWidget(self.buttonBox)
 
+    def update_dataset_tag(self):
+        ini_file = self.cb.currentText().replace(".ini","")
+        self.le.setText(ini_file)
 
     # get selected text
     def getCheetahIni(self):
